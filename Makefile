@@ -7,12 +7,12 @@ ZIP=zip
 RM=rm
 MKDIR=mkdir
 
-STYLES=hsmalogo.sty hsmalogosw.pdf blindtext.sty
-DRAWINGS=ablauf.odg
-INCLUDE_DRAWINGS=ablauf.pdf
+STYLES=hsmalogo.sty hsmalogosw.pdf # blindtext.sty
+DRAWINGS=
+INCLUDE_DRAWINGS=
 IMAGES=
 MAIN=praksem
-TEXFILES=$(MAIN).tex preamble.tex vorspann.tex hyphenations.tex glossar.tex
+TEXFILES=$(MAIN).tex preamble.tex vorspann.tex hyphenations.tex # glossar.tex
 BIB=praksem.bib
 INCLUDE_BIB=$(MAIN).bbl # spaeter nochmal manuell
 # INCLUDE_BIB=$(MAIN)1.bbl $(MAIN)2.bbl # spaeter nochmal manuell, getrennt
@@ -29,14 +29,15 @@ LaTeXPraksem.zip: $(TOPACK)
 	cp $(TOPACK) LaTeXPraksem
 	$(ZIP) -r LaTeXPraksem.zip LaTeXPraksem
 	$(RM) -rf LaTeXPraksem
+	echo zip
 
 $(MAIN).pdf: $(TEXFILES) $(STYLES) $(INCLUDE_DRAWINGS) $(INCLUDE_BIB)
 
-# für das convert braucht man ImageMagick
-zeichnungjpg.jpg: zeichnung.pdf
-	convert zeichnung.pdf zeichnungjpg.jpg
-zeichnungpng.png: zeichnung.pdf
-	convert zeichnung.pdf zeichnungpng.png
+# # für das convert braucht man ImageMagick
+# zeichnungjpg.jpg: zeichnung.pdf
+# 	convert zeichnung.pdf zeichnungjpg.jpg
+# zeichnungpng.png: zeichnung.pdf
+# 	convert zeichnung.pdf zeichnungpng.png
 
 
 # das ist mit einem Literaturverzeichnis
@@ -57,8 +58,8 @@ $(MAIN).bbl: $(MAIN).tex $(MAIN).bib
 #$(MAIN)2.bbl: online.bib $(MAIN)2.aux
 #	-$(BIBTEX) $(MAIN)2
 
-glos:
-	makeglossaries $(MAIN)
+# glos:
+# 	makeglossaries $(MAIN)
 
 # Das erste Mal TeXen wegen Bibliographie
 # Das allererste Mal ist die Bibliographie noch nicht drin.
@@ -77,7 +78,7 @@ RERUN = "(There were undefined |Rerun to get (cross-references|the bars))"
 .SUFFIXES: .odg .tex .pdf
 
 .tex.pdf: bib
-	$(PDFLATEX) $*.tex
+	$(PDFLATEX) $(MAIN).tex
     # nochmal wenn notwendig
 	egrep $(RERUN) $*.log && ($(PDFLATEX) $*.tex) ; true
     # und nochmal wenn notwendig
@@ -93,4 +94,3 @@ clean:
 TOPUB=LaTeXPraksem.zip praksem.pdf
 pub: $(TOPUB)
 	chmod a+r $(TOPUB)
-	scp -rp $(TOPUB) peter@www.pbma.de:/var/www/html/latex
