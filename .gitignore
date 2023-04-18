@@ -17,3 +17,5 @@
 *.url
 *.svn
 *.toc
+*.icloud
+*.tpbuild
