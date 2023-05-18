@@ -18,10 +18,10 @@ cd ..
 
 
 if [ -d "/Volumes/T7" ]; then
-    rm -r /Volumes/T7/studium/praxissemester
+    rm -r /Volumes/T7/studium/praxissemester/ps_bericht
     rsync -av --exclude='.git*' "$PWD"/ps_bericht /Volumes/T7/studium/praxissemester
 fi
 
-rm -r ~/Library/Mobile\ Documents/com\~apple\~CloudDocs/Studium/Praxissemester/PS_Bericht/
+rm -r ~/Library/Mobile\ Documents/com\~apple\~CloudDocs/Studium/Praxissemester/PS_Bericht/ps_bericht
 rsync -av --exclude='.git*' "$PWD"/ps_bericht ~/Library/Mobile\ Documents/com\~apple\~CloudDocs/Studium/Praxissemester/PS_Bericht/
 
